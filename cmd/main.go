@@ -10,12 +10,14 @@ import (
 )
 
 func main() {
+	// Подключение к NATS серверу
 	natsConn, err := stan.Connect("test-cluster", "1")
 	if err != nil {
 		log.Fatal("Failed to connect to NTA Streaming Server")
 	}
 	defer natsConn.Close()
 
+	// Подключение к PostgreSQL
 	pgConn, err := pgx.Connect(pgx.ConnConfig{
 		Host:     "127.0.0.1",
 		Port:     5432,

@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// HandleGetOrderById - метод, возвращающий хендлер, который получается запрос "получить заказ по id"
 func (s *HTTPServer) HandleGetOrderById() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		orderUid := r.URL.Query().Get("uid")

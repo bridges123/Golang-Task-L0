@@ -9,6 +9,7 @@ import (
 	"log"
 )
 
+// Client - клиент NATS Streaming, отвечающий за подписку и получение данных с канала
 type Client struct {
 	conn          stan.Conn
 	repo          storage.OrderRepo
@@ -19,6 +20,7 @@ func InitClient(conn stan.Conn, repo storage.OrderRepo) *Client {
 	return &Client{conn: conn, repo: repo}
 }
 
+// Start - метод, запускающий подписки на каналы и считывание данных из них
 func (c *Client) Start() error {
 	sub, err := c.conn.Subscribe("channel", func(m *stan.Msg) {
 		dec := json.NewDecoder(bytes.NewReader(m.Data))
@@ -36,6 +38,7 @@ func (c *Client) Start() error {
 	return err
 }
 
+// Close - отписывание от всех каналов и закрытие соединения NATS
 func (c *Client) Close() {
 	for _, sub := range c.subscriptions {
 		sub.Unsubscribe()
