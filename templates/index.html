@@ -12,9 +12,7 @@
 <div>
     <label for="uid">Uid: </label><input id="uid" type="text">
     <input id="sender" type="button"><br>
-    <!--    <pre>-->
     <pre id="json"></pre>
-    <!--    </pre>-->
 </div>
 </body>
 
@@ -22,15 +20,20 @@
 
     $("#sender").click(function () {
         const uid = $("#uid").val()
-        $.get(`http://localhost:8080/order?uid=${uid}`, function (data, status) {
-            if (status === "success") {
+        $.ajax({
+            url: `http://localhost:8080/order?uid=${uid}`,
+            method: 'get',
+            success: function(data){
                 document.getElementById("json").textContent = data
                     .replace(/,/g, ',\n')
                     .replace(/{/g, '{\n')
                     .replace(/}/g, '\n}')
-                    .replace(/\n"/g, '\n    \"');
+                    .replace(/\n"/g, '\n    \"')
+            },
+            error: function (response, exception) {
+                document.getElementById("json").textContent = response.responseText
             }
-        })
+        });
     })
 </script>
 </html>

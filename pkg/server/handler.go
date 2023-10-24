@@ -16,7 +16,7 @@ func (s *HTTPServer) HandleGetOrderById() http.HandlerFunc {
 		}
 		order, exists := s.repo.GetById(orderUid)
 		if !exists {
-			w.WriteHeader(500)
+			w.WriteHeader(404)
 			w.Write([]byte("Sorry. Order " + orderUid + " doesn't exists"))
 			return
 		}
