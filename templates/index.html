@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo Service</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<div>
+    <label for="uid">Uid: </label><input id="uid" type="text">
+    <input id="sender" type="button"><br>
+    <!--    <pre>-->
+    <pre id="json"></pre>
+    <!--    </pre>-->
+</div>
+</body>
+
+<script>
+
+    $("#sender").click(function () {
+        const uid = $("#uid").val()
+        $.get(`http://localhost:8080/order?uid=${uid}`, function (data, status) {
+            if (status === "success") {
+                document.getElementById("json").textContent = data
+                    .replace(/,/g, ',\n')
+                    .replace(/{/g, '{\n')
+                    .replace(/}/g, '\n}')
+                    .replace(/\n"/g, '\n    \"');
+            }
+        })
+    })
+</script>
+</html>

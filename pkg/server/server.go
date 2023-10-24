@@ -2,6 +2,7 @@ package server
 
 import (
 	"L0/pkg/storage"
+	"html/template"
 	"net/http"
 )
 
@@ -17,6 +18,10 @@ func InitServer(repo storage.OrderRepo) *HTTPServer {
 
 // Start - привязка всех хендлеров и запуск сервера
 func (s *HTTPServer) Start() {
+	var tpl = template.Must(template.ParseFiles("templates/index.html"))
 	http.HandleFunc("/order", s.HandleGetOrderById())
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		tpl.Execute(w, nil)
+	})
 	s.server.ListenAndServe()
 }
