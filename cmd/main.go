@@ -13,7 +13,7 @@ func main() {
 	// Подключение к NATS серверу
 	natsConn, err := stan.Connect("test-cluster", "1")
 	if err != nil {
-		log.Fatal("Failed to connect to NTA Streaming Server")
+		log.Fatal("Failed to connect to NAT Streaming Server")
 	}
 	defer natsConn.Close()
 
